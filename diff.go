@@ -1,6 +1,7 @@
 package jsondiff
 
 import (
+	"encoding/json"
 	"fmt"
 	"log"
 	"math/big"
@@ -108,7 +109,22 @@ func (x Modification) String() string {
 	return fmt.Sprintf("* %s: (%v -> %v)", x.Name, x.Old, x.New)
 }
 
-// Difference computes difference between two documents
+//  Difference computes difference between two documents.
+func JSONDifference(node1, node2 []byte) ([]Delta, error) {
+	var n1, n2 interface{}
+	err := json.Unmarshal(node1, &n1)
+	if err != nil {
+		return nil, nil
+	}
+	err = json.Unmarshal(node2, &n2)
+	if err != nil {
+		return nil, nil
+	}
+	return Difference(n1, n2), nil
+}
+
+// Difference computes difference between two documents. node1 and
+// node2 are results of json.Unmarshal(&interface{})
 func Difference(node1, node2 interface{}) []Delta {
 	return nodeDifference(FieldName{}, node1, node2)
 }
