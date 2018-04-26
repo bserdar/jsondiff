@@ -234,13 +234,11 @@ func valueBasedEquivalence(node1, node2 []interface{}) dualMap {
 }
 
 // arrayDifference computes difference between two array nodes based
-// on array element values. If the array nodes have identifiers, then
-// an equivalence relationship is defined based on those
-// identifiers. Otherwise, the equivalence is defined based on content
-// equivalence. Content equivalence cannot find differences inside an
-// array node. It finds elements that are unmodified between the two
-// arays, and assumes any other element is inserted/deleted. If the
-// element indexes don't match, it assumes elements are moved
+// on array element values. Content equivalence cannot find
+// differences inside an array node. It finds elements that are
+// unmodified between the two arays, and assumes any other element is
+// inserted/deleted. If the element indexes don't match, it assumes
+// elements are moved
 func arrayDifference(fieldName FieldName, node1, node2 []interface{},
 	computeEq func(node1, node2 []interface{}) dualMap, recurse bool) []Delta {
 	debugf("array diff n1: %v n2: %v", node1, node2)
